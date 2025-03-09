@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}{{ post.name }}{% endblock title %}
+
+
+{% block css %}
+{% comment %} <link href="{% static 'css/blog.css' %}" rel="stylesheet"> {% endcomment %}
+{% endblock css %}
+
+
+{% block content %}
+{% comment %} {% if filter_form %}
+    {% include 'include/filter.html' %}
+{% endif %} {% endcomment %}
+<section class="post">
+    <div class="post__container container">
+        <div class="post__header">
+            <h2 class="post__headings">{{ post.name }}</h2>
+            <span class="post__author">{{ post.blog.author.get_full_name|default:post.blog.author }}</span>
+            <span class="post__created">{{ post.created_at|date:"SHORT_DATE_FORMAT" }}</span>
+            <a href="{{ post.blog.get_absolute_url }}" class="post__link">← к блогу</a>
+        </div>
+        <div class="post__content">
+            <p>{{ post.content }}</p>
+        </div>
+    </div>
+</section>
+{% endblock content %}
