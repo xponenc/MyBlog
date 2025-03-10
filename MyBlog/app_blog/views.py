@@ -1,6 +1,7 @@
 from django.shortcuts import render
-from django.views.generic import DetailView, ListView
+from django.views.generic import DetailView, ListView, CreateView, UpdateView, DeleteView
 
+from .forms import BlogForm, PostForm
 from .models import Blog, Post
 
 
@@ -16,6 +17,23 @@ class BlogListView(ListView):
     queryset = Blog.objects.select_related("author").all()
 
 
+class BlogCreateView(CreateView):
+    """Создание Блога"""
+    model = Blog
+    form_class = BlogForm
+
+
+class BlogUpdateView(UpdateView):
+    """Редактирование Блога"""
+    model = Blog
+    form_class = BlogForm
+
+
+class BlogDeleteView(DeleteView):
+    """Удаление Блога"""
+    model = Blog
+
+
 class PostDetailView(DetailView):
     """Детальный просмотр Поста"""
     model = Post
@@ -27,3 +45,19 @@ class PostListView(ListView):
     model = Post
     queryset = Post.objects.select_related("blog__author").all()
 
+
+class PostCreateView(CreateView):
+    """Создание Поста"""
+    model = Post
+    form_class = PostForm
+
+
+class PostUpdateView(UpdateView):
+    """Редактирование Поста"""
+    model = Post
+    form_class = PostForm
+
+
+class PostDeleteView(DeleteView):
+    """Удаление Поста"""
+    model = Post

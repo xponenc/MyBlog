@@ -16,10 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include, reverse_lazy
-from django.views.generic import RedirectView
+from django.views.generic import RedirectView, TemplateView
 
 urlpatterns = [
     # path('', RedirectView.as_view(url=reverse_lazy("blogs:blogs"), permanent=True)),
     path('admin/', admin.site.urls),
-    path('', include('app_blog.urls')),
+    path('', TemplateView.as_view(template_name="index.html"), name="index"),
+    path('about/', TemplateView.as_view(template_name="about.html"), name="about"),
+    path('blogs/', include('app_blog.urls')),
 ]

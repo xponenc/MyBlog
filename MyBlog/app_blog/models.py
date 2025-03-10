@@ -28,7 +28,7 @@ class Post(models.Model):
     """Модель Поста"""
     blog = models.ForeignKey(Blog, verbose_name="блог", on_delete=models.CASCADE)
     title = models.CharField(verbose_name="название", max_length=200, unique=True)
-    content = models.CharField(verbose_name="название", max_length=5000, unique=True)
+    content = models.TextField(verbose_name="содержание")
     draft = models.BooleanField(verbose_name="Черновик", default=False)
     created_at = models.DateTimeField(verbose_name="дата создания", auto_now_add=True)
     updated_at = models.DateTimeField(verbose_name="дата редактирования", auto_now=True)

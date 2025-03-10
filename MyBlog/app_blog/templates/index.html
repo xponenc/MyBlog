@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}MyBlog{% endblock title %}
+
+
+{% block css %}
+{% comment %} <link href="{% static 'css/main.css' %}" rel="stylesheet"> {% endcomment %}
+{% endblock css %}
+
+
+{% block content %}
+<section class="main">
+    <div class="main__container container">
+        <div class="main__header">
+            <h2 class="main__heading">Приложение MyBlog</h2>
+            <h3 class="main__subheading">Добро пожаловать</h3>
+        </div>
+        <div class="main__content">
+            <div class="main__info">
+                <p>Тут будет количество новых блогов за сутки</p>
+            </div>
+            <div class="main__top">
+                <p>Тут будут полурядрные блоги и авторы</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}

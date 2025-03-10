@@ -17,14 +17,14 @@
 <section class="blog">
     <div class="blog__container container">
         <div class="blog__header">
-            <h2 class="blog__headings">{{ blog.name }}</h2>
+            <h2 class="blog__heading">{{ blog.name }}</h2>
             <a href="{% url "blogs:blogs" %}" class="post__link">← к блогaм</a>
-
+            <a href="{% url "blogs:post-create" %}" class="post__link">Создать новый пост</a>
         </div>
         <ul class="blog__posts posts">
             {% for post in blog.post_set.all %}
                 <li class="posts__item post-item">
-                    <h3 class="post-item__heading">{{ post.title }}</h3>
+                    <h3 class="post-item__heading"><a href="{{ post.get_absolute_url }}" class="post-item__link">{{ post.title }}</a></h3>
                     <span class="post-item__author">{{ blog.author.get_full_name|default:blog.author }}</span>
                     <span class="post-item__created">{{ blog.created_at|date:"SHORT_DATE_FORMAT" }}</span>
                     <a href="{{ post.get_absolute_url }}" class="post-item__link">⟶</a>
