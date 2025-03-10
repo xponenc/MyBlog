@@ -21,6 +21,7 @@
             <span class="post__author">{{ post.blog.author.get_full_name|default:post.blog.author }}</span>
             <span class="post__created">{{ post.created_at|date:"SHORT_DATE_FORMAT" }}</span>
             <a href="{{ post.blog.get_absolute_url }}" class="post__link">← к блогу</a>
+            <a href="{% url 'blogs:post-update' post.pk %}" class="post__link">Редактировать</a>
         </div>
         <div class="post__content">
             <p>{{ post.content }}</p>

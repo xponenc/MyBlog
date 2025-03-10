@@ -21,8 +21,8 @@
             {% if post %}
                 <span class="post__author">{{ post.blog.author.get_full_name|default:post.blog.author }}</span>
                 <span class="post__created">{{ post.created_at|date:"SHORT_DATE_FORMAT" }}</span>
+                <a href="{{ post.blog.get_absolute_url }}" class="post__link">← к блогу</a>
             {% endif %}
-            <a href="{{ post.blog.get_absolute_url }}" class="post__link">← к блогу</a>
         </div>
         <div class="post__content">
             <form action="" class="post__form" method="POST">
