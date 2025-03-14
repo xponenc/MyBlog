@@ -18,9 +18,10 @@
     <div class="blog__container container">
         <div class="blog__header">
             <h2 class="blog__heading">Блог {{ blog.name }}</h2>
-            <a href="{% url 'blogs:blogs' %}" class="post__link">← к блогaм</a>
-            <a href="{% url 'blogs:blog-update' blog.pk %}" class="post__link">Редактировать блог</a>
-            <a href="{% url 'blogs:post-create' blog.pk %}" class="post__link">Создать новый пост</a>
+            {% if blog.author == request.user %}
+            <a href="{% url 'blogs:blog-update' blog.pk %}" class="link">Редактировать блог</a>
+            <a href="{% url 'blogs:post-create' blog.pk %}" class="link">Новый пост</a>
+            {% endif %}
         </div>
         <ul class="blog__posts posts">
             {% for post in blog.post_set.all %}

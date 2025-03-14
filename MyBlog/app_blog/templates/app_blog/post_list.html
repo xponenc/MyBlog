@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}Список постов{% endblock title %}
+
+
+{% block css %}
+<link href="{% static 'css/pagination.css' %}" rel="stylesheet">
+<link href="{% static 'app_blog/css/blogs.css' %}" rel="stylesheet">
+
+{% endblock css %}
+
+
+{% block content %}
+{% comment %} {% if filter_form %}
+    {% include 'include/filter.html' %}
+{% endif %} {% endcomment %}
+<section class="posts">
+    <div class="posts__container container">
+        <div class="posts__header">
+            <h2 class="posts__heading">Список постов</h2>
+        </div>
+        {% include 'include/pagination.html' %}
+        <ul class="posts__list">
+            {% for post in object_list %}
+            <li class="posts__item post-item">
+                <h3 class="post-item__heading"> <a href="{{ post.get_absolute_url }}" class="post-item__link">{{ post.title }}</a></h3>
+                <span class="post-item__author">{{ post.blog.author.get_full_name|default:post.blog.author }}</span>
+                <span class="post-item__created">{{ post.updated_at|default:post.created_at|date:"SHORT_DATE_FORMAT" }}</span>
+                <a href="{{ post.get_absolute_url }}" class="post-item__link">⟶</a>
+            </li>            
+            {% endfor %}
+        </ul>
+        {% include 'include/pagination.html' %}
+    </div>
+</section>
+{% endblock content %}

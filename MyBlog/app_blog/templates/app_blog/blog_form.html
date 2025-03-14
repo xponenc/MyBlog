@@ -20,15 +20,14 @@
                 <span class="blog__author">{{ blog.author.get_full_name|default:blog.author }}</span>
                 <span class="blog__created">{{ blog.created_at|date:"SHORT_DATE_FORMAT" }}</span>
             {% endif %}
-            <a href="{{ blog.get_absolute_url }}" class="blog__link">← Отменить</a>
         </div>
         <div class="blog__content">
-            <form action="" class="blog__form" method="POST">
+            <form class="blog__form form" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
-                {{ form.as_p }}
-                <button class="blog__btn btn btn_send" type="submit">
-                    {% if blog %}Сохранить{% else %}Создать{% endif %}
-                </button>
+                {% include "widgets/_custom-form.html" %}
+                <div class="form__btn-block">
+                    <button class="form__btn btn btn_reset" type="submit">{% if blog %}Сохранить{% else %}Создать{% endif %}</button>
+                </div>
             </form>
         </div>
     </div>

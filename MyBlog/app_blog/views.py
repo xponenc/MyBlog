@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import UserPassesTestMixin
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Prefetch
 from django.shortcuts import render, get_object_or_404, redirect
@@ -19,12 +20,31 @@ class BlogListView(ListView):
     """Списковый просмотр Блогов"""
     model = Blog
     queryset = Blog.objects.select_related("author").all()
+    paginate_by = 6
 
 
-class BlogCreateView(CreateView):
+class BlogCreateView(UserPassesTestMixin, CreateView):
     """Создание Блога"""
     model = Blog
     form_class = BlogForm
+
+
+    def test_func(self):
+        current_blogs_counter = Blog.objects.filter(author=self.request.user).count()
+        if current_blogs_counter >= self.request.user.profile.max_blogs:
+            return False
+        if not self.request.user.groups.filter(name__in=['Верифицированный пользователь']).exists():
+            return False
+        return True
+
+    def post(self, request, *args, **kwargs):
+        form = BlogForm(request.POST)
+        if form.is_valid():
+            blog = form.save(commit=False)
+            blog.author = request.user
+            blog.save()
+            return redirect(blog.get_absolute_url())
+        return render(request, "app_blogs/blog_form.html", {'form': form})
 
 
 class BlogUpdateView(UpdateView):
@@ -48,6 +68,7 @@ class PostListView(ListView):
     """Списковый просмотр Постов"""
     model = Post
     queryset = Post.objects.select_related("blog__author").exclude(draft=True)
+    paginate_by = 6
 
 
 class PostCreateView(CreateView):
